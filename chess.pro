@@ -9,13 +9,18 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ChessContorl.cpp \
     ChessPiece.cpp \
     main.cpp \
-    Chessboard.cpp
+    Chessboard.cpp \
+    player/ChessPlayer.cpp
 
 HEADERS += \
+    ChessContorl.h \
     ChessPiece.h \
-    Chessboard.h
+    Chessboard.h \
+    player/AbstractChessPlayer.h \
+    player/ChessPlayer.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
