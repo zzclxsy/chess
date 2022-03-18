@@ -18,6 +18,9 @@ public:
     virtual bool move(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess = nullptr)=0;
     PLAYER_TYPE getPlayerType(){return m_type;};
 
+	void setNextPlayer(AbstractChessPlayer *player) { mp_nextPlayer = player;}
+	AbstractChessPlayer *nextPlayer() {return mp_nextPlayer;}
+
     //设置回调 ，移动完成，通知控制类
     void setCallBack(std::function<void()> callback){m_callback = callback;}
 
@@ -27,6 +30,7 @@ protected:
 
 private:
     PLAYER_TYPE m_type;
+	AbstractChessPlayer *mp_nextPlayer;
 };
 
 #endif // ABSTRACTCHESSPLAYER_H

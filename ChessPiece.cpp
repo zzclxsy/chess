@@ -35,7 +35,9 @@ void ChessPiece::setChessPos(QPoint pos)
 
 void ChessPiece::drawChessPiece(QPainter &painter,const QPointF &origin,const double &interval)
 {
+	QPointF pieceOrigin = origin + QPoint(m_chessPos.x() * interval, m_chessPos.y() * interval);
 
+	painter.drawEllipse(pieceOrigin, interval / 2 - 1, interval / 2 - 1);
 }
 
 ChessPiece::TYPE ChessPiece::getChessType()

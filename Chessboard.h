@@ -2,7 +2,7 @@
 #define CHESSBOARD_H
 
 #include <QWidget>
-
+#include "ChessContorl.h"
 class Chessboard : public QWidget
 {
     Q_OBJECT
@@ -16,6 +16,9 @@ private:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
+private:
+	ChessContorl *mp_chessContorl;
 };
 #endif // CHESSBOARD_H

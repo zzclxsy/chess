@@ -6,6 +6,7 @@
 Chessboard::Chessboard(QWidget *parent)
     : QWidget(parent)
 {
+	mp_chessContorl = new ChessContorl;
 }
 
 Chessboard::~Chessboard()
@@ -90,7 +91,14 @@ void Chessboard::paintEvent(QPaintEvent *)
 
     //画楚河汉界
 
+	//画棋子
+    mp_chessContorl->drawChessPiece(painter, origin, interval);
+}
 
+void Chessboard::mousePressEvent(QMouseEvent *event)
+{
+
+    QWidget::mousePressEvent(event);
 }
 
 void Chessboard::paintPosStatus(QPainter &painter, QPointF pos, double interval, QPointF realorigin)
