@@ -6,7 +6,7 @@
 Chessboard::Chessboard(QWidget *parent)
     : QWidget(parent)
 {
-	mp_chessContorl = new ChessContorl;
+	mp_chessContorl = new ChessContorl; 
 }
 
 Chessboard::~Chessboard()
