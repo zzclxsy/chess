@@ -1,5 +1,7 @@
 #include "Chessboard.h"
 #include <QPainter>
+#include <QDebug>
+#include <QMouseEvent>
 #define BOARD_MARGIN_X 50
 #define BOARD_MARGIN_Y 50
 
@@ -31,6 +33,7 @@ void Chessboard::paintEvent(QPaintEvent *)
     QPointF realOrigin((this->size().width() - realBoardSize.width())/2.0,
                        (this->size().height() - realBoardSize.height())/2.0);
 
+    m_realOrigin = realOrigin;
     //画棋盘外壳
     painter.drawLine(realOrigin + QPointF(0, 0),                                          realOrigin + QPointF(0, realBoardSize.height()));
     painter.drawLine(realOrigin + QPointF(0, realBoardSize.height()),                     realOrigin + QPointF(realBoardSize.width(), realBoardSize.height()));
@@ -39,7 +42,7 @@ void Chessboard::paintEvent(QPaintEvent *)
 
     //计算格子大小
     double interval = realBoardSize.height()/10.0;
-
+    m_interval = interval;
     //计算棋盘起点
     QPointF origin(realOrigin + QPointF(interval/2,interval/2));
 
@@ -92,11 +95,18 @@ void Chessboard::paintEvent(QPaintEvent *)
     //画楚河汉界
 
 	//画棋子
-    mp_chessContorl->drawChessPiece(painter, origin, interval);
+    mp_chessContorl->DrawChessPiece(painter, origin, interval);
 }
 
 void Chessboard::mousePressEvent(QMouseEvent *event)
 {
+    QPointF origin = event->pos() - m_realOrigin;
+    if (origin.x() < 0 || origin.y() < 0)
+        return;
+
+    QPoint PressPoint = QPoint(int(origin.x()/m_interval), int(origin.y()/m_interval));
+    if (mp_chessContorl->IsPiece(PressPoint))
+        update();
 
     QWidget::mousePressEvent(event);
 }

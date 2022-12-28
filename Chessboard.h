@@ -20,5 +20,7 @@ protected:
 
 private:
 	ChessContorl *mp_chessContorl;
+    QPointF m_realOrigin;
+    double m_interval;
 };
 #endif // CHESSBOARD_H

@@ -3,22 +3,31 @@
 #include "ChessPiece.h"
 #include <QVector>
 #include "player/ChessPlayer.h"
+#include <QMap>
+#include <QPoint>
 class ChessContorl
 {
+    typedef QPair<QString, QPoint> PiecePoint;
 public:
     ChessContorl();
-	void drawChessPiece(QPainter &painter, const QPointF &origin, const double &interval);
+    void DrawChessPiece(QPainter &painter, const QPointF &origin, const double &interval);
+    bool IsPiece(QPoint point);
 
 private:
-    void initChessPiece();
-    void initChessPlayer();
+    void CreateChessPiece();
+    void ResetChessPiece();
+    void CreatePlayer();
 
-	void roundFinish();
+
+    void RoundFinished();
 private:
-    QVector<ChessPiece *> m_allChessPiece;
+    QVector<ChessPiece *> m_totalPiece;
 	AbstractChessPlayer *mp_currPlayer;
-	AbstractChessPlayer *chuPlay;
-	AbstractChessPlayer *hanPlay;
+
+    AbstractChessPlayer *mp_chuPlay;
+    AbstractChessPlayer *mp_hanPlay;
+    ChessPiece *mp_currPiece;
+    QList<PiecePoint> m_totalPoint;
 
 };
 

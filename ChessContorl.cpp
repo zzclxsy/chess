@@ -4,55 +4,81 @@
 #include <QDebug>
 ChessContorl::ChessContorl()
 {
-	initChessPiece();
-	initChessPlayer();
+    m_totalPoint.append(PiecePoint("車",QPoint(0,0)));m_totalPoint.append(PiecePoint("馬",QPoint(1,0)));m_totalPoint.append(PiecePoint("象",QPoint(2,0)));m_totalPoint.append(PiecePoint("士",QPoint(3,0)));
+    m_totalPoint.append(PiecePoint("将",QPoint(4,0)));m_totalPoint.append(PiecePoint("士",QPoint(5,0)));m_totalPoint.append(PiecePoint("象",QPoint(6,0)));m_totalPoint.append(PiecePoint("馬",QPoint(7,0)));
+    m_totalPoint.append(PiecePoint("車",QPoint(8,0)));m_totalPoint.append(PiecePoint("卒",QPoint(0,3)));m_totalPoint.append(PiecePoint("卒",QPoint(2,3)));m_totalPoint.append(PiecePoint("卒",QPoint(4,3)));
+    m_totalPoint.append(PiecePoint("卒",QPoint(6,3)));m_totalPoint.append(PiecePoint("卒",QPoint(8,3)));m_totalPoint.append(PiecePoint("砲",QPoint(1,2)));m_totalPoint.append(PiecePoint("砲",QPoint(7,2)));
+
+    m_totalPoint.append(PiecePoint("车",QPoint(0,9)));m_totalPoint.append(PiecePoint("马",QPoint(1,9)));m_totalPoint.append(PiecePoint("相",QPoint(2,9)));m_totalPoint.append(PiecePoint("士",QPoint(3,9)));
+    m_totalPoint.append(PiecePoint("帅",QPoint(4,9)));m_totalPoint.append(PiecePoint("士",QPoint(5,9)));m_totalPoint.append(PiecePoint("相",QPoint(6,9)));m_totalPoint.append(PiecePoint("马",QPoint(7,9)));
+    m_totalPoint.append(PiecePoint("车",QPoint(8,9)));m_totalPoint.append(PiecePoint("兵",QPoint(0,6)));m_totalPoint.append(PiecePoint("兵",QPoint(2,6)));m_totalPoint.append(PiecePoint("兵",QPoint(4,6)));
+    m_totalPoint.append(PiecePoint("兵",QPoint(6,6)));m_totalPoint.append(PiecePoint("兵",QPoint(8,6)));m_totalPoint.append(PiecePoint("炮",QPoint(1,7)));m_totalPoint.append(PiecePoint("炮",QPoint(7,7)));
+
+    mp_currPiece = nullptr;
+    CreateChessPiece();
+    CreatePlayer();
 }
 
-void ChessContorl::initChessPiece()
+void ChessContorl::ResetChessPiece()
 {
-    m_allChessPiece.append(new ChessPiece(QPoint(0,0), "車",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(1,0), "馬",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(2,0), "象",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(3,0), "士",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(4,0), "将",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(5,0), "士",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(6,0), "象",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(7,0), "馬",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(8,0), "車",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(0,3), "卒",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(2,3), "卒",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(4,3), "卒",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(6,3), "卒",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-    m_allChessPiece.append(new ChessPiece(QPoint(8,3), "卒",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-	m_allChessPiece.append(new ChessPiece(QPoint(1,2), "砲",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
-	m_allChessPiece.append(new ChessPiece(QPoint(7,2), "砲",ChessPiece::E_CHE, ChessPiece::CAMP_CHU));
+
 }
 
 
-void ChessContorl::initChessPlayer()
+void ChessContorl::CreatePlayer()
 {
-	chuPlay = new ChessPlayer;
-	hanPlay = new ChessPlayer;
-	chuPlay->setNextPlayer(hanPlay);
-	hanPlay->setNextPlayer(chuPlay);
+    mp_chuPlay = new ChessPlayer;
+    mp_hanPlay = new ChessPlayer;
+    mp_chuPlay->setNextPlayer(mp_hanPlay);
+    mp_hanPlay->setNextPlayer(mp_chuPlay);
 
-	hanPlay->setCallBack(std::bind(&ChessContorl::roundFinish, this));
-	chuPlay->setCallBack(std::bind(&ChessContorl::roundFinish, this));
+    mp_hanPlay->setCallBack(std::bind(&ChessContorl::RoundFinished, this));
+    mp_chuPlay->setCallBack(std::bind(&ChessContorl::RoundFinished, this));
 
-	mp_currPlayer = chuPlay;
+    mp_currPlayer = mp_chuPlay;
 }
 
-void ChessContorl::roundFinish()
+void ChessContorl::RoundFinished()
 {
-	qDebug() << "回合结束";
+    qDebug() << "回合结束";
 }
 
-void ChessContorl::drawChessPiece(QPainter & painter, const QPointF & origin, const double & interval)
+void ChessContorl::DrawChessPiece(QPainter & painter, const QPointF & origin, const double & interval)
 {
-	for (ChessPiece *chess : m_allChessPiece)
-	{
-		chess->drawChessPiece(painter, origin, interval);
-	}
+    for (ChessPiece *chess : qAsConst(m_totalPiece))
+    {
+        chess->DrawChessPiece(painter, origin, interval);
+    }
+}
+
+bool ChessContorl::IsPiece(QPoint point)
+{
+    for (ChessPiece *chess : qAsConst(m_totalPiece))
+    {
+       if (chess->GetChessPos() == point)
+       {
+           if (mp_currPiece != nullptr)
+               mp_currPiece->SetChooseStatus(false);
+
+           chess->SetChooseStatus(true);
+           mp_currPiece = chess;
+           return true;
+       }
+    }
+
+    return false;
+}
+
+void ChessContorl::CreateChessPiece()
+{
+    for (int i = 0; i < m_totalPoint.size(); i++)
+    {
+        PiecePoint Point = m_totalPoint[i];
+        if (i < 16)
+            m_totalPiece.append(new ChessPiece(Point.second, Point.first, ChessPiece::CAMP_CHU));
+        else
+            m_totalPiece.append(new ChessPiece(Point.second, Point.first, ChessPiece::CAMP_HAN));
+    }
 }
 
 

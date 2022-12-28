@@ -22,29 +22,36 @@ public:
      };
 
 public:
-    ChessPiece(QPoint coord, QString chessName, TYPE chessType, CAMP camp);
+    ChessPiece(QPoint coord, QString chessName, CAMP camp);
 
     //存活
-    bool isAlive();
-    void setAliveStatus(bool status);
+    bool IsAlive();
+    void SetAliveStatus(bool status);
+
+    //挑选
+    void SetChooseStatus(bool isChoose);
+    bool GetChooseStatus();
 
     //坐标
-    QPoint getChessPos();
-    void   setChessPos(QPoint pos);
+    QPoint GetChessPos();
+    void   SetChessPos(QPoint pos);
 
     //画棋子界面
-    void drawChessPiece(QPainter &painter,const QPointF &origin,const double &interval);
+    void DrawChessPiece(QPainter &painter,const QPointF &origin,const double &interval);
 
     //棋子类型
-    TYPE getChessType();
-    void setChessType(TYPE type);
+    TYPE GetChessType();
+    void SetChessType(TYPE type);
 
     //棋子名称
-    QString getChessName();
-    void setChessName(QString chessName);
+    QString GetChessName();
+    void SetChessName(QString chessName);
 
     //阵营
-    CAMP getChessCamp();
+    CAMP GetChessCamp();
+
+private:
+    TYPE GetPieceTypeByName(QString chessName);
 
 private:
     bool mb_isAlive;
@@ -53,6 +60,7 @@ private:
     TYPE m_chessType;
     QString m_chessName;
     CAMP m_chessCamp;
+    bool mb_pick;
 };
 
 #endif // CHESSPIECE_H
