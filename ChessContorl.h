@@ -12,7 +12,7 @@ public:
     ChessContorl();
     void DrawChessPiece(QPainter &painter, const QPointF &origin, const double &interval);
     bool IsPiece(QPoint point);
-
+    bool MovePiece(QPoint point, ChessPiece *endPiece = nullptr);
 private:
     void CreateChessPiece();
     void ResetChessPiece();

@@ -93,6 +93,13 @@ void Chessboard::paintEvent(QPaintEvent *)
     paintPosStatus(painter, origin + QPointF(interval *8, interval *6), interval, origin);
 
     //画楚河汉界
+    QFont font;
+    font.setFamily("楷体");
+    font.setPointSize(15);
+    painter.setFont(font);
+
+    painter.drawText(origin + QPointF(interval/2,interval*4 + interval/2 + 7),"楚河");
+    painter.drawText(origin + QPointF(interval/2 + interval*6,interval*4 + interval/2 + 7),"汉界");
 
 	//画棋子
     mp_chessContorl->DrawChessPiece(painter, origin, interval);
@@ -105,8 +112,9 @@ void Chessboard::mousePressEvent(QMouseEvent *event)
         return;
 
     QPoint PressPoint = QPoint(int(origin.x()/m_interval), int(origin.y()/m_interval));
-    if (mp_chessContorl->IsPiece(PressPoint))
-        update();
+    mp_chessContorl->IsPiece(PressPoint);
+
+    update();
 
     QWidget::mousePressEvent(event);
 }

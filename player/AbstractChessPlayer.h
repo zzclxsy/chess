@@ -2,7 +2,7 @@
 #define ABSTRACTCHESSPLAYER_H
 #include "ChessPiece.h"
 #include <functional>
-
+#include <QVector>
 class AbstractChessPlayer
 {
 public:
@@ -27,7 +27,6 @@ public:
 protected:
     void setPlayerType(PLAYER_TYPE type){m_type = type;}
     std::function<void()> m_callback;
-
 private:
     PLAYER_TYPE m_type;
 	AbstractChessPlayer *mp_nextPlayer;

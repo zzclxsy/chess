@@ -13,14 +13,16 @@ SOURCES += \
     ChessPiece.cpp \
     main.cpp \
     Chessboard.cpp \
-    player/ChessPlayer.cpp
+    player/ChessPlayer.cpp \
+    strategy/PieceStrategy.cpp
 
 HEADERS += \
     ChessContorl.h \
     ChessPiece.h \
     Chessboard.h \
     player/AbstractChessPlayer.h \
-    player/ChessPlayer.h
+    player/ChessPlayer.h \
+    strategy/PieceStrategy.h
 
 msvc{
     QMAKE_CFLAGS += /utf-8

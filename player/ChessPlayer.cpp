@@ -1,5 +1,5 @@
 #include "ChessPlayer.h"
-
+#include "strategy/PieceStrategy.h"
 ChessPlayer::ChessPlayer()
 {
     setPlayerType(PLAYER_TYPE::E_person);
@@ -7,5 +7,9 @@ ChessPlayer::ChessPlayer()
 
 bool ChessPlayer::move(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess)
 {
-    return true;
+    if (PieceStrategy::instant()->IsPieceMove(startChess,endPos,endChess)){
+        m_callback();
+        return true;
+   }
+   return false;
 }
