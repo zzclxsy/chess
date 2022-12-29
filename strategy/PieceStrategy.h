@@ -15,6 +15,10 @@ private:
     bool IsBingMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess = nullptr);
     bool IsCheMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess = nullptr);
     bool IsPaoMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess = nullptr);
+    bool IsShiMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess = nullptr);
+    bool IsKingMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess = nullptr);
+    bool IsXiangMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess = nullptr);
+    bool IsMaMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess = nullptr);
 
 private:
     static PieceStrategy* mp_instant;

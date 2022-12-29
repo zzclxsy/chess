@@ -17,19 +17,19 @@ bool PieceStrategy::IsPieceMove(ChessPiece *startChess, QPoint endPos, ChessPiec
         return IsCheMove(startChess, endPos,  endChess);
 
     case ChessPiece::E_KING:
-        break;
+        return IsKingMove(startChess, endPos,  endChess);
 
     case ChessPiece::E_MA:
-        break;
+        return IsMaMove(startChess, endPos,  endChess);
 
     case ChessPiece::E_PAO:
         return IsPaoMove(startChess, endPos,  endChess);
 
     case ChessPiece::E_SHI:
-        break;
+        return IsShiMove(startChess, endPos,  endChess);
 
     case ChessPiece::E_XIANG:
-        break;
+        return IsXiangMove(startChess, endPos,  endChess);
 
     default:
         break;
@@ -214,7 +214,7 @@ bool PieceStrategy::IsPaoMove(ChessPiece *startChess, QPoint endPos, ChessPiece 
                         && (piece->GetChessPos().y() > startChess->GetChessPos().y())
                         && (piece->GetChessPos().y() < endPos.y())){
 
-                  index++;
+                    index++;
                 }
             }
 
@@ -248,7 +248,7 @@ bool PieceStrategy::IsPaoMove(ChessPiece *startChess, QPoint endPos, ChessPiece 
                         && (piece->GetChessPos().x() < startChess->GetChessPos().x())
                         && (piece->GetChessPos().x() > endPos.x())){
 
-                   index++;
+                    index++;
                 }
             }
 
@@ -278,7 +278,7 @@ bool PieceStrategy::IsPaoMove(ChessPiece *startChess, QPoint endPos, ChessPiece 
                         && (piece->GetChessPos().x() > startChess->GetChessPos().x())
                         && (piece->GetChessPos().x() < endPos.x())){
 
-                   index++;
+                    index++;
                 }
             }
 
@@ -305,4 +305,303 @@ bool PieceStrategy::IsPaoMove(ChessPiece *startChess, QPoint endPos, ChessPiece 
 
 
     return true;
+}
+
+bool PieceStrategy::IsShiMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess)
+{
+    if (startChess->GetChessCamp() == ChessPiece::CAMP_HAN){
+        //判断是否出界
+        if (endPos.x() < 3|| endPos.y() <7|| endPos.x() > 5||endPos.y() >9)
+            return false;
+
+        if (((endPos.x() == (startChess->GetChessPos().x() + 1))&&(endPos.y() == (startChess->GetChessPos().y() + 1)))||
+                ((endPos.x() == (startChess->GetChessPos().x() + 1))&&(endPos.y() == (startChess->GetChessPos().y() - 1)))||
+                ((endPos.x() == (startChess->GetChessPos().x() - 1))&&(endPos.y() == (startChess->GetChessPos().y() + 1)))||
+                ((endPos.x() == (startChess->GetChessPos().x() - 1))&&(endPos.y() == (startChess->GetChessPos().y() - 1)))){
+
+            if (endChess != nullptr){
+                endChess->SetAliveStatus(false);
+            }
+
+            return true;
+        }
+    }else if (startChess->GetChessCamp() == ChessPiece::CAMP_CHU){
+        //判断是否出界
+        if (endPos.x() < 3|| endPos.y() < 0|| endPos.x() > 5||endPos.y() >2)
+            return false;
+
+        if (((endPos.x() == (startChess->GetChessPos().x() + 1))&&(endPos.y() == (startChess->GetChessPos().y() + 1)))||
+                ((endPos.x() == (startChess->GetChessPos().x() + 1))&&(endPos.y() == (startChess->GetChessPos().y() - 1)))||
+                ((endPos.x() == (startChess->GetChessPos().x() - 1))&&(endPos.y() == (startChess->GetChessPos().y() + 1)))||
+                ((endPos.x() == (startChess->GetChessPos().x() - 1))&&(endPos.y() == (startChess->GetChessPos().y() - 1)))){
+
+            if (endChess != nullptr){
+                endChess->SetAliveStatus(false);
+            }
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool PieceStrategy::IsKingMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess)
+{
+    if (startChess->GetChessCamp() == ChessPiece::CAMP_HAN){
+        //判断是否出界
+        if (endPos.x() < 3|| endPos.y() <7|| endPos.x() > 5||endPos.y() >9)
+            return false;
+
+        if (((endPos.x() == (startChess->GetChessPos().x()))&&(endPos.y() == (startChess->GetChessPos().y() + 1)))||
+                ((endPos.x() == (startChess->GetChessPos().x()))&&(endPos.y() == (startChess->GetChessPos().y() - 1)))||
+                ((endPos.x() == (startChess->GetChessPos().x() - 1))&&(endPos.y() == (startChess->GetChessPos().y())))||
+                ((endPos.x() == (startChess->GetChessPos().x() + 1))&&(endPos.y() == (startChess->GetChessPos().y())))){
+
+            if (endChess != nullptr){
+                endChess->SetAliveStatus(false);
+            }
+
+            return true;
+        }
+    }else if (startChess->GetChessCamp() == ChessPiece::CAMP_CHU){
+        //判断是否出界
+        if (endPos.x() < 3|| endPos.y() < 0|| endPos.x() > 5||endPos.y() >2)
+            return false;
+
+        if (((endPos.x() == (startChess->GetChessPos().x()))&&(endPos.y() == (startChess->GetChessPos().y() + 1)))||
+                ((endPos.x() == (startChess->GetChessPos().x()))&&(endPos.y() == (startChess->GetChessPos().y() - 1)))||
+                ((endPos.x() == (startChess->GetChessPos().x() - 1))&&(endPos.y() == (startChess->GetChessPos().y())))||
+                ((endPos.x() == (startChess->GetChessPos().x() + 1))&&(endPos.y() == (startChess->GetChessPos().y())))){
+
+            if (endChess != nullptr){
+                endChess->SetAliveStatus(false);
+            }
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool PieceStrategy::IsXiangMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess)
+{
+    //象不能过河
+    if (startChess->GetChessCamp() == ChessPiece::CAMP_CHU){
+        if (endPos.y() > 4)
+            return false;
+    }else if (startChess->GetChessCamp() == ChessPiece::CAMP_HAN){
+        if (endPos.y() < 5)
+            return false;
+    }
+
+    if ((endPos.x() == startChess->GetChessPos().x()+2)&&(endPos.y() == startChess->GetChessPos().y()+2))
+    {
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x()+1,startChess->GetChessPos().y()+1);
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }else if ((endPos.x() == startChess->GetChessPos().x()+2)&&(endPos.y() == startChess->GetChessPos().y()-2)){
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x()+1,startChess->GetChessPos().y()-1);
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }else if ((endPos.x() == startChess->GetChessPos().x()-2)&&(endPos.y() == startChess->GetChessPos().y()+2)){
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x()-1,startChess->GetChessPos().y()+1);
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }else if ((endPos.x() == startChess->GetChessPos().x()-2)&&(endPos.y() == startChess->GetChessPos().y()-2)){
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x()-1,startChess->GetChessPos().y()-1);
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }
+
+    return false;
+}
+
+bool PieceStrategy::IsMaMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess)
+{
+    if ((endPos.x() == startChess->GetChessPos().x()+1)&&(endPos.y() == startChess->GetChessPos().y()+2))
+    {
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x(),startChess->GetChessPos().y()+1);
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }else if ((endPos.x() == startChess->GetChessPos().x()-1)&&(endPos.y() == startChess->GetChessPos().y()+2))
+    {
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x(),startChess->GetChessPos().y()+1);
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }else if ((endPos.x() == startChess->GetChessPos().x()-2)&&(endPos.y() == startChess->GetChessPos().y()+1))
+    {
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x() - 1,startChess->GetChessPos().y());
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }else if ((endPos.x() == startChess->GetChessPos().x()-2)&&(endPos.y() == startChess->GetChessPos().y()-1))
+    {
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x() - 1,startChess->GetChessPos().y());
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }else if ((endPos.x() == startChess->GetChessPos().x()-1)&&(endPos.y() == startChess->GetChessPos().y()-2))
+    {
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x(),startChess->GetChessPos().y() - 1);
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }else if ((endPos.x() == startChess->GetChessPos().x()+1)&&(endPos.y() == startChess->GetChessPos().y()-2))
+    {
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x(),startChess->GetChessPos().y() - 1);
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }else if ((endPos.x() == startChess->GetChessPos().x()+2)&&(endPos.y() == startChess->GetChessPos().y()-1))
+    {
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x() + 1,startChess->GetChessPos().y());
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }else if ((endPos.x() == startChess->GetChessPos().x()+2)&&(endPos.y() == startChess->GetChessPos().y()+1))
+    {
+        //判断是否有撇脚
+        foreach(ChessPiece *piece, m_totalPiece){
+            if (piece->IsAlive() == false)
+                continue;
+
+            QPoint pieJiaoPos = QPoint(startChess->GetChessPos().x() + 1,startChess->GetChessPos().y());
+            if (piece->GetChessPos() == pieJiaoPos){
+                return false;
+            }
+        }
+
+        if (endChess != nullptr){
+            endChess->SetAliveStatus(false);
+        }
+        return true;
+    }
+
+    return false;
 }
