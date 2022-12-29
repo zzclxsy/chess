@@ -8,6 +8,14 @@ PieceStrategy::PieceStrategy()
 
 bool PieceStrategy::IsPieceMove(ChessPiece *startChess, QPoint endPos, ChessPiece *endChess)
 {
+    //如果endPos位置在棋盘外面，则直接返回false
+    if (endPos.x() < 0 || endPos.x() >8){
+        return false;
+    }
+    if (endPos.y() < 0 || endPos.x() >9){
+        return false;
+    }
+
     switch (startChess->GetChessType())
     {
     case ChessPiece::E_BING:

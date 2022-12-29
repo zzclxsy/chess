@@ -60,8 +60,10 @@ bool ChessContorl::IsPiece(QPoint point)
         if (chess->IsAlive() == false)
             continue;
 
+        //该棋子被点击
         if (chess->GetChessPos() == point)
         {
+            //判断是否是同一个阵营的棋子，如果是则改变挑选，如果不是则移动棋子到对应位置
             if (((mp_currPlayer == mp_chuPlay) && (chess->GetChessCamp() == ChessPiece::CAMP_CHU))
                     ||((mp_currPlayer == mp_hanPlay) && (chess->GetChessCamp() == ChessPiece::CAMP_HAN)))
             {
